@@ -7,14 +7,23 @@ from googleapiclient.discovery import build     #import required libraries
 api_key = 'AIzaSyBBE05OlHrRPs70Gc4Sxrdc8weO_rm9C8I'
 youtube = build('youtube', 'v3', developerKey=api_key)  #setup API key to fetch YT data
 
+plCount = []
+
 print('Playlist Link? (whole thing)')
 playlistUrl = input()
 playlist = playlistUrl.replace('https://www.youtube.com/playlist?list=','')
 
-print('Playlist Length?')
-playlistLength = input()
-num = (int(playlistLength)-1) // 5
+pl_lengthRequest = youtube.playlists().list(
+    id = playlist,
+    part = 'contentDetails',
+    )
+pl_lengthResponse = pl_lengthRequest.execute()
 
+for g in pl_lengthResponse['items']: 
+    plCount.append(g['contentDetails']['itemCount']) #gets number of playlist items in list format
+playlistLength = ' '.join(map(str, plCount))
+num = (int(playlistLength)-1) // 5      #turns list into string and divides by 5 for later use
+    
 def mainDebug():    
     print(token)
     print(titles)
@@ -90,7 +99,7 @@ for count in range(int(num)):
 
     for d in pageKey_response['nextPageToken']:
         token = token + d
-#    print(token)       #remove for debug
+    #print(token)       #remove for debug
     
     csvTitles.extend(titles)
     csvViews.extend(views)
@@ -150,11 +159,10 @@ filePath = os.path.abspath(fileMake.name)
 
 fileMake.close()
 
-print(filePath)
-
 csvLinks = [urlHead + i for i in urlList]   #makes the video ID's clickable links
     
 dict = {'Video Title': csvTitles, 'Views': csvViews, 'Likes/View': csvLikesPerView, 'Video Links':csvLinks}
 df = pd.DataFrame(dict)
 df.to_csv('PlaylistData.csv')            #formats and saves lists to a .csv
 os.system(filePath)
+print(filePath)
