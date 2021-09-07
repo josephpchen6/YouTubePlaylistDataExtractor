@@ -1,3 +1,10 @@
+IMPORTANT:
+Avoid installing multiple times- future installations will have spaces in
+the directory path, resulting in the .csv file being unable to open. Delete
+old files before reinstalling, or rename file to something without a space.
+Similarly, avoid putting the file into a directory with a space (i.e.
+enclosing folder has space) for full effect.
+
 Description:
 Paste YouTube playlist link into shell (A playlist link looks like this:
 https://www.youtube.com/playlist?list=PLYB-fhFqp3J88ZLXAxX3Lvwd1zW6DIEne;
