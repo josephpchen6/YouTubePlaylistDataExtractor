@@ -1,5 +1,9 @@
 Description:
-Paste YouTube playlist link into shell (A playlist link looks like this: https://www.youtube.com/playlist?list=PLYB-fhFqp3J88ZLXAxX3Lvwd1zW6DIEne; click "VIEW FULL PLAYLIST" if using YouTube search). A .csv file will be opened, containing a spreadsheet with the video titles, views, likes, likes per view, and clickable links.
+Paste YouTube playlist link into shell (A playlist link looks like this:
+https://www.youtube.com/playlist?list=PLYB-fhFqp3J88ZLXAxX3Lvwd1zW6DIEne;
+click "VIEW FULL PLAYLIST" if using YouTube search). A .csv file
+will be opened, containing a spreadsheet with the video titles,
+views, likes, likes per view, and clickable links.
 
 Required directories:
 -pandas (pip install pandas)
