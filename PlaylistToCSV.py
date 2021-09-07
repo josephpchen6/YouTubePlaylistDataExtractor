@@ -6,7 +6,6 @@ import os, sys
 import time
 from googleapiclient.discovery import build     #import required libraries
 
-api_key='AIzaSyBfdmU778gN0cTc9C-IMBtlUOTl2Rt3x6s'
 youtube = build('youtube', 'v3', developerKey=api_key)  #setup API key to fetch YT data
 
 print('Playlist Link? (whole thing)')
