@@ -152,20 +152,8 @@ filePath = os.path.abspath(fileMake.name)
 
 fileMake.close()
 
-print('Manual Sample or Playlist? (m/p)')
-linkPrompt = input()
-if linkPrompt == 'm':
-    csvLinks = [urlHead + i for i in urlList]   #makes the video ID's clickable links
+csvLinks = [urlHead + i for i in urlList]   #makes the video ID's clickable links
     
-elif linkPrompt == 'p':
-    csvLinks = urlList      #keeps the videoID's intact for playlist creation
-    print('Reminder: sort smallest to largest for playlist creation')
-    os.system('open /Users/josephchen/Library/Python/IDbeta.py')
-
-else:
-    print('exit')
-    exit()
-
 dict = {'Video Title': csvTitles, 'Views': csvViews, 'Likes/View': csvLikesPerView, 'Video Links':csvLinks}
 df = pd.DataFrame(dict)
 df.to_csv('list.csv')            #formats and saves lists to a .csv
