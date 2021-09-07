@@ -6,5 +6,5 @@ Required directories:
 
 Currently working on:
 No 'number of videos' prompt
-Directly export .csv into a youtube playlist
+Directly export .csv into a youtube playlist (need more quotas)
 Linux Version
