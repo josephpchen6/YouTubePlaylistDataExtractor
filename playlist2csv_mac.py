@@ -18,12 +18,10 @@ pl_lengthRequest = youtube.playlists().list(
     part = 'contentDetails',
     )
 pl_lengthResponse = pl_lengthRequest.execute()
+length = pl_lengthResponse['items'][0]['contentDetails']['itemCount']
 
-for a in pl_lengthResponse['items']: 
-    plCount.append(g['contentDetails']['itemCount']) #gets number of playlist items in list format
-playlistLength = ' '.join(map(str, plCount))
-num = (int(playlistLength)-1) // 5      #turns list into string and divides by 5 for later use
-    
+num = int((length-1)/5)    #turns list into string and divides by 5 for later use
+
 def mainDebug():    
     print(token)
     print(titles)
@@ -72,7 +70,7 @@ for count in range(int(num)):
     pageKey_response = pageKey_request.execute()
 
     for b in pl_response['items']: 
-        vid_ids.append(a['contentDetails']['videoId'])  #gets list of video IDs off the playlist's videos
+        vid_ids.append(b['contentDetails']['videoId'])  #gets list of video IDs off the playlist's videos
 
     idCopy = vid_ids       #creates a copies of the video ID list for processing
     token = ''
@@ -91,7 +89,7 @@ for count in range(int(num)):
     title_response = title_request.execute()    #gets snippet off a video
 
     for c in title_response['items']:
-        titles.append(b['snippet']['localized']['title'])   #gets the title of a video from the video ID list copy
+        titles.append(c['snippet']['localized']['title'])   #gets the title of a video from the video ID list copy
                       
     for d in stat_response['items']:
         views.append(d['statistics']['viewCount'])      #gets the view count of a video from the video ID list copy
@@ -164,4 +162,3 @@ csvLinks = [urlHead + j for j in urlList]   #makes the video ID's clickable link
 dict = {'Video Title': csvTitles, 'Views': csvViews, 'Likes/View': csvLikesPerView, 'Video Links':csvLinks}
 df = pd.DataFrame(dict)
 df.to_csv('PlaylistData.csv')            #formats and saves lists to a .csv
-os.system('open ' + filePath)
