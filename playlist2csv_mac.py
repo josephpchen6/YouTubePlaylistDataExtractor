@@ -4,8 +4,9 @@ import googleapiclient.errors
 import os, sys
 from googleapiclient.discovery import build     #import required libraries
 
-api_key = 'AIzaSyBBE05OlHrRPs70Gc4Sxrdc8weO_rm9C8I'
-youtube = build('youtube', 'v3', developerKey=api_key)  #setup API key to fetch YT data
+api_key = open("api_key.txt", "r")
+youtube = build('youtube', 'v3', developerKey=api_key.read())  #setup API key to fetch YT data
+api_key.close()
 
 plCount = []
 
