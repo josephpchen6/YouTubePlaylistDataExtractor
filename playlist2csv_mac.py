@@ -26,7 +26,6 @@ def pl_to_csv():
     csvViews = []
     csvLikes = []
     urlList = []
-    print('Countdown:')
     try:
         while token is not None:
             print('t')
@@ -36,38 +35,29 @@ def pl_to_csv():
             likes = []
             
             pl_request = youtube.playlistItems().list(
-                part = 'contentDetails',
+                part = "contentDetails",
                 playlistId = playlist,
-                maxResults = '10',
+                maxResults = "50",
                 pageToken = token
                 )
             pl_response = pl_request.execute()  #gets contentDetails of playlist
-            
-            for b in pl_response['items']: 
-                vid_ids.append(b['contentDetails']['videoId'])  #gets list of video IDs off the playlist's videos
+
+            for pl_item in pl_response['items']: 
+                vid_ids.append(pl_item['contentDetails']['videoId'])  #gets list of video IDs off the playlist's videos
 
             idCopy = vid_ids       #creates a copies of the video ID list for processing
             token = ''
             
-            stat_request = youtube.videos().list(
-                part="statistics",
+            video_request = youtube.videos().list(
+                part=["statistics","snippet"],
                 id=','.join(vid_ids)     #joins the video ID's with commas
-                
                 )
-            stat_response = stat_request.execute()    #gets statistics off a video
+            video_response = video_request.execute()    #gets statistics off a video
 
-            title_request = youtube.videos().list(
-                part='snippet',
-                id=','.join(idCopy)    #joins the video titles with commas
-                )
-            title_response = title_request.execute()    #gets snippet off a video
-
-            for c in title_response['items']:
-                titles.append(c['snippet']['localized']['title'])   #gets the title of a video from the video ID list copy
-                            
-            for d in stat_response['items']:
-                views.append(d['statistics']['viewCount'])      #gets the view count of a video from the video ID list copy
-                likes.append(d['statistics']['likeCount'])      #also gets the like count of the video
+            for video in video_response['items']:
+                titles.append(video['snippet']['localized']['title'])   #gets the title of a video from the video ID list copy
+                views.append(video['statistics']['viewCount'])      #gets the view count of a video from the video ID list copy
+                likes.append(video['statistics']['likeCount'])      #also gets the like count of the video
 
             csvTitles.extend(titles)
             csvViews.extend(views)
